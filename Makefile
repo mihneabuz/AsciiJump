@@ -1,5 +1,5 @@
 build:
-	g++ test.cpp -o main -lncurses
+	g++ test.cpp -o main -lncursesw
 
 run: build
 	./main

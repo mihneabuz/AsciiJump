@@ -1,70 +1,89 @@
+typedef struct Coord {
+	float x;
+	float y;
+} coord;
+
 class Player {
 public:
-	float x_poz;
-	float y_poz;
-	float x_next;
-	float y_next;
+	coord poz;
+	coord next;
+	coord poffset;
 	float vel;
+	float step;
 	int margin;
-	int offset_y;
-	int offset_x;
 	int cooldown;
 
-	Player(int x, int y, int offx, int offy, int m) {
-		x_poz = x;
-		y_poz = y;
-		x_next = x;
-		y_next = y;
-		offset_y = offy;
-		offset_x = offx;
-		margin = m;
+	Player(int x, int y, int offx, int offy, int mx) {
+		poz.x = x;
+		poz.y = y;
+		next.x = x;
+		next.y = y;
+		poffset.x = offx;
+		poffset.y = offy;
+		margin = mx;
+		step = (mx - offx) / 50;
 		cooldown = 0;
 		vel = 0;
 	}
 
 	float getX() {
-		return x_poz;
+		return poz.x;
 	}
 
 	float getY() {
-		return y_poz;
+		return poz.y;
 	}
 
 	void moveLeft() {
-		if (x_poz > offset_x + 2)
-			x_next -= 0.6;
+		if (poz.x > poffset.x + 1)
+			next.x -= step;
 	}
 
 	void moveRight() {
-		if (x_poz < margin)
-			x_next += 0.6;
+		if (poz.x < margin)
+			next.x += step;
 	}
 
-	void jump() {
-		if (!cooldown)
+	void jump(bool c) {
+		if (c)
 			vel = 0.06;
-		cooldown = 100;
+		else if (!cooldown) {
+			vel = 0.06;
+			cooldown = 100;
+		}
+	}
+
+	bool falling() {
+		return vel < 0;
+	}
+
+	float getTrueX(){
+		return poz.x - poffset.x;
+	}
+
+    float getTrueY(){
+		return poz.y + 1;
 	}
 
 	void update() {
 		if (cooldown)
 			cooldown --;
 		mvprintw(0, 25, "cooldown: %d", cooldown);
-		y_next += vel;
+		next.y += vel;
 		vel = vel - 0.0001;
-		if (y_next <= 0) {
-			y_next = 0;
+		if (next.y <= 0) {
+			next.y = 0;
 			vel = 0;
 		}
-		if ((int)x_poz != (int)x_next || (int)y_poz != (int)y_next) {
-			mvprintw(offset_y - y_poz - 2, x_poz,      " ");
-			mvprintw(offset_y - y_poz - 1, x_poz - 1, "   ");
-			mvprintw(offset_y - y_poz, x_poz - 1,     "   ");
-			x_poz = x_next;
-			y_poz = y_next;
-			mvprintw(offset_y - y_poz - 2, x_poz,      "_");
-			mvprintw(offset_y - y_poz - 1, x_poz - 1, "/O\\");
-			mvprintw(offset_y - y_poz, x_poz - 1,     "( )");
+		if ((int)poz.x != (int)next.x || (int)poz.y != (int)next.y) {
+			mvprintw(poffset.y - poz.y - 2, poz.x,      " ");
+			mvprintw(poffset.y - poz.y - 1, poz.x - 1, "   ");
+			mvprintw(poffset.y - poz.y, poz.x - 1,     "   ");
+			poz.x = next.x;
+			poz.y = next.y;
+			mvprintw(poffset.y - poz.y - 2, poz.x,      "_");
+			mvprintw(poffset.y - poz.y - 1, poz.x - 1, "/O\\");
+			mvprintw(poffset.y - poz.y, poz.x - 1,     "( )");
 		}
 	}
 
