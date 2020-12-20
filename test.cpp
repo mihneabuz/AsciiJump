@@ -7,7 +7,6 @@
 
 int main()
 {
-	//system("./set.sh");
 	initscr();
 	int consoleHeight, consoleWidth;
 	getmaxyx(stdscr, consoleHeight, consoleWidth);
@@ -15,10 +14,9 @@ int main()
 	refresh();
 	getch();
 
-	game(consoleHeight, consoleWidth);
+	game(consoleHeight, consoleWidth, 30);
 	refresh();
 	getch();
 	endwin();
-	//system("./unset.sh");
 	return 0;
 }	

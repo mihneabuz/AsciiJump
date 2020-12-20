@@ -8,4 +8,4 @@ clean:
 	rm main
 
 test: build
-	./run.sh
+	./main
