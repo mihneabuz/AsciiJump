@@ -10,10 +10,6 @@ int main()
 	initscr();
 	int consoleHeight, consoleWidth;
 	getmaxyx(stdscr, consoleHeight, consoleWidth);
-	printw("Console size: %dx%d", consoleHeight, consoleWidth);
-	refresh();
-	getch();
-
 	game(consoleHeight, consoleWidth, 30);
 	refresh();
 	getch();

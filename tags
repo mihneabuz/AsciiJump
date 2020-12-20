@@ -16,7 +16,7 @@ WALL	game.cpp	6;"	d	language:C++	file:
 coord	player.h	/^} coord;$/;"	t	language:C	typeref:struct:Coord
 exists	map.h	/^	bool exists;$/;"	m	language:C	struct:Platform
 game	game.cpp	/^void game(int consoleHeight, int consoleWidth, int diff)$/;"	f	language:C++
-gameOver	game.cpp	/^void gameOver(int consoleHeight, int consoleWidth) {$/;"	f	language:C++
+gameOver	game.cpp	/^void gameOver(int consoleHeight, int consoleWidth, int score) {$/;"	f	language:C++
 main	test.cpp	/^int main()$/;"	f	language:C++
 platform	map.h	/^} platform;$/;"	t	language:C	typeref:struct:Platform
 poz	map.h	/^	int poz;$/;"	m	language:C	struct:Platform

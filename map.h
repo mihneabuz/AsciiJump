@@ -16,6 +16,8 @@ public:
 	int heightOffset;
 	int widthOffset;
 	int platform_chance;
+	int platform_chance_inc;
+	int platform_chance_dec;
 	int max_platform_size;
 	int min_platform_size;
 	platform* map;
@@ -29,9 +31,14 @@ public:
 		min_platform_size = width / 12;
 		max_platform_size = width / 8;
 		platform_chance = chance;
+		platform_chance_inc = chance / 10;
+		platform_chance_dec = chance / 3;
 		advance = 0;
 		map = new platform[height];
-		for (int i = 0; i < height; i++) {
+		map[height - 1].exists = false;
+		map[height - 2].exists = false;
+		map[height - 3].exists = false;
+		for (int i = 0; i < height - 3; i++) {
 			map[i] = generateLine();
 		}
 	}
@@ -40,7 +47,7 @@ public:
 		platform aux;
 		int x = rand() % 100;
 		if (x < platform_chance) {
-			platform_chance -= 10;
+			platform_chance -= platform_chance_dec;
 			aux.exists = true;
 			aux.type = rand() % 3 == 2 ? 1 : 0;
  			aux.poz = rand() % (width - max_platform_size + 1);
@@ -49,7 +56,7 @@ public:
 		}
 		else
 		{
-			platform_chance += 3;
+			platform_chance += platform_chance_inc;
 			aux.exists = false;
 			aux.poz = 0;
 			aux.size = 0;

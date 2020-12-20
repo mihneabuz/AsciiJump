@@ -26,7 +26,7 @@ public:
 		poffset.y = offy;
 		margin.x = mx;
 		margin.y = my;
-		step = (mx - offx) / 60;
+		step = (float)mx / 80;
 		vel = 0;
 		cooldown = 0;
 		jumps = 4;
@@ -42,12 +42,12 @@ public:
 	}
 
 	void moveLeft() {
-		if (poz.x > 1)
+		if (poz.x > 2)
 			next.x -= step;
 	}
 
 	void moveRight() {
-		if (poz.x < margin.x)
+		if (poz.x < margin.x - 0.01)
 			next.x += step;
 	}
 
@@ -55,8 +55,8 @@ public:
 		if (no_check)
 			vel = 0.06;
 		else if (!cooldown && jumps) {
-			vel = 0.06;
-			cooldown = 100;
+			vel = 0.07;
+			cooldown = 1000;
 			jumps--;
 			started = true;
 		}
@@ -78,7 +78,7 @@ public:
 		attron(COLOR_PAIR(PLAYER));
 		if (cooldown)
 			cooldown --;
-		mvprintw(0, margin.x + poffset.x - 17, "Jump remaining: %d", jumps);
+		mvprintw(0, margin.x + 2 * poffset.x - 18, "Jump remaining: %d", jumps);
 		next.y += vel;
 		if (started) {
 			vel = vel - 0.00008;
