@@ -82,8 +82,10 @@ public:
 		next.y += vel;
 		if (started) {
 			vel = vel - 0.00008;
-			if (next.y <= 0)
+			if (next.y <= 0) {
+				attroff(COLOR_PAIR(PLAYER));
 				return 0;
+			}
 		}
 
 		if ((int)poz.x != (int)next.x || (int)poz.y != (int)next.y) {

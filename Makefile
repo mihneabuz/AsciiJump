@@ -1,11 +1,10 @@
-build:
-	g++ test.cpp -o main -lncursesw
+EXE = asciijump
+
+build: 
+	g++ game.cpp -o $(EXE) -lncursesw -Wall -Wextra
 
 run: build
-	./main
+	./$(EXE)
 
 clean:
-	rm main
-
-test: build
-	./main
+	rm $(EXE)

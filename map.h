@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #define PLAT 3
 #define DEST 4
 
@@ -31,8 +30,8 @@ public:
 		min_platform_size = width / 12;
 		max_platform_size = width / 8;
 		platform_chance = chance;
-		platform_chance_inc = chance / 10;
-		platform_chance_dec = chance / 3;
+		platform_chance_inc = chance / 5;
+		platform_chance_dec = chance;
 		advance = 0;
 		map = new platform[height];
 		map[height - 1].exists = false;
