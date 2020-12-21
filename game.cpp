@@ -22,19 +22,21 @@ void gameOver(int consoleHeight, int consoleWidth, int score) {
 	mvprintw(consoleHeight / 2 + 1, consoleWidth / 2 - 10, "Score: %d", score);
 	attroff(COLOR_PAIR(WALL));
 
-	std::ifstream highscore("score");
+	std::ifstream highscore("/home/mihnea/Public/AsciiJump/score");
 	std::string line;
 	getline(highscore, line);
 	int oldscore = atoi(line.c_str());
 	highscore.close();
 	if (score > oldscore) {
-		std::ofstream highscore("score");
+		std::ofstream highscore("/home/mihnea/Public/AsciiJump/score");
 		highscore << std::to_string(score);
 		highscore.close();
 	}
 
 	move(consoleHeight - 1, consoleWidth - 1);
+	refresh();
 	timeout(-1);
+	sleep(1);
 	getch();
 }
 
@@ -60,7 +62,7 @@ void game(int consoleHeight, int consoleWidth, int diff)
 			 mapWidth, mapHeight);
 	Map m(mapHeight, mapWidth, mapHeightOffset, mapWidthOffset, diff);
 	int score = 0;
-	int scoremult = 2000 / (consoleHeight + 10) / (diff + 3) ;
+	int scoremult = 2000 / (consoleHeight + 10) / (diff + 1) ;
 
 	system("xset r rate 10 40");
 	char c;
@@ -147,13 +149,13 @@ int main()
 		mvprintw(consoleHeight - 1, 0, 
 				 "Console: %dx%d", consoleHeight, consoleHeight);
 
-		std::ifstream highscore("score");
+		std::ifstream highscore("/home/mihnea/Public/AsciiJump/score");
 		std::string line;
 		getline(highscore, line);
 		int score = atoi(line.c_str());
 		highscore.close();
 
-		mvprintw(consoleHeight - 1, consoleWidth - 22, "Highscore: %d", score);
+		mvprintw(consoleHeight - 1, consoleWidth - 18, "Highscore: %d", score);
 		move(consoleHeight - 1, consoleWidth - 1);
 
 		refresh();

@@ -27,7 +27,7 @@ public:
 		width = w;
 		heightOffset = hoff;
 		widthOffset = woff;
-		min_platform_size = width / 12;
+		min_platform_size = width / 12 + 1;
 		max_platform_size = width / 8;
 		platform_chance = chance;
 		platform_chance_inc = chance / 5;
