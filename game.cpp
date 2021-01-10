@@ -1,10 +1,14 @@
 #include <ncurses.h>
 #include <iostream>
 #include <fstream>
+#include <cstdio>
+#include <memory>
+#include <array>
+#include <string>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string>
+#include <string.h>
 #include "map.h"
 #include "player.h"
 
@@ -15,7 +19,7 @@
 
 void gameOver(int consoleHeight, int consoleWidth, int score) {
 	clear();
-	system("xset r rate");
+	system("xset r rate 300 40");
 		
 	attron(COLOR_PAIR(WALL));
 	mvprintw(consoleHeight / 2 - 1, consoleWidth / 2 - 9, "GAME OVER");
@@ -115,6 +119,13 @@ void game(int consoleHeight, int consoleWidth, int diff)
 
 int main()
 {
+	std::string cmd = "xset -q | grep \"repeat rate\" | xargs | cut -d' ' -f4,7";
+	std::array<char, 128> buffer;
+	std::string reset_cmd = "xset r rate ";
+	std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+	while(fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+		reset_cmd += buffer.data();
+
 	initscr();
 	int consoleHeight, consoleWidth, difficulty = 20;
 	getmaxyx(stdscr, consoleHeight, consoleWidth);
@@ -169,6 +180,7 @@ int main()
 		}
 		if (c == (char)10 || c == 'q') {
 			if (choice == 2) {
+				system(reset_cmd.c_str());
 				endwin();
 				return 0;
 			}
