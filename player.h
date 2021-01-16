@@ -78,7 +78,7 @@ public:
 		attron(COLOR_PAIR(PLAYER));
 		if (cooldown)
 			cooldown --;
-		mvprintw(0, margin.x + 2 * poffset.x - 18, "Jump remaining: %d", jumps);
+		mvprintw(0, margin.x + 2 * poffset.x - 18, "Jumps remaining: %d", jumps);
 		next.y += vel;
 		if (started) {
 			vel = vel - 0.00008;
